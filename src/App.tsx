@@ -1,3 +1,5 @@
+import { ListGroup } from "./components";
+
 export default function App() {
-  return <>Hello World</>;
+  return <ListGroup />;
 }
