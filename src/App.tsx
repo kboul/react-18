@@ -1,4 +1,4 @@
-import { ListGroup } from "./components";
+import { Alert, ListGroup } from "./components";
 
 export default function App() {
   const handleSelectItem = (item: string) => {
@@ -6,10 +6,13 @@ export default function App() {
   };
 
   return (
-    <ListGroup
-      heading="Cities"
-      items={["New York", "San Francisco", "Tokyo", "London", "Paris"]}
-      onSelectItem={handleSelectItem}
-    />
+    <>
+      <ListGroup
+        heading="Cities"
+        items={["New York", "San Francisco", "Tokyo", "London", "Paris"]}
+        onSelectItem={handleSelectItem}
+      />
+      <Alert>Hello World</Alert>
+    </>
   );
 }
