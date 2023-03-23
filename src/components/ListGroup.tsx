@@ -3,14 +3,22 @@ import { useState } from "react";
 interface ListGroupProps {
   heading: string;
   items: string[];
+  onSelectItem: (item: string) => void;
 }
 
-export default function ListGroup({ heading, items }: ListGroupProps) {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>();
+export default function ListGroup({
+  heading,
+  items,
+  onSelectItem,
+}: ListGroupProps) {
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
 
   const message = items.length === 0 && <p>No item found</p>;
 
-  const handleClick = (index: number) => () => setSelectedIndex(index);
+  const handleClick = (item: string, index: number) => () => {
+    setSelectedIndex(index);
+    onSelectItem(item);
+  };
 
   return (
     <>
@@ -20,7 +28,7 @@ export default function ListGroup({ heading, items }: ListGroupProps) {
         {items.map((item, index) => (
           <li
             key={item}
-            onClick={handleClick(index)}
+            onClick={handleClick(item, index)}
             style={{
               cursor: "pointer",
               backgroundColor:
