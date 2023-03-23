@@ -34,7 +34,6 @@ export default function ListGroup({
               cursor: "pointer",
               backgroundColor:
                 selectedIndex === index ? "lightblue" : "transparent",
-              width: "15%",
             }}
           >
             {item}
