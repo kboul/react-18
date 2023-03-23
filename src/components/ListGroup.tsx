@@ -1,3 +1,4 @@
+import { Heading, UnorderedList, ListItem } from "@chakra-ui/react";
 import { useState } from "react";
 
 interface ListGroupProps {
@@ -22,11 +23,11 @@ export default function ListGroup({
 
   return (
     <>
-      <h1>{heading}</h1>
+      <Heading as="h1">{heading}</Heading>
       {message}
-      <ul>
+      <UnorderedList>
         {items.map((item, index) => (
-          <li
+          <ListItem
             key={item}
             onClick={handleClick(item, index)}
             style={{
@@ -37,9 +38,9 @@ export default function ListGroup({
             }}
           >
             {item}
-          </li>
+          </ListItem>
         ))}
-      </ul>
+      </UnorderedList>
     </>
   );
 }
