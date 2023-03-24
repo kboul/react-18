@@ -1,6 +1,8 @@
-import { Container, Stack } from "@chakra-ui/react";
+import { Container, Flex, Stack } from "@chakra-ui/react";
 import { useState } from "react";
-import { Alert, Button, ListGroup } from "./components";
+import { FaCity } from "react-icons/fa";
+
+import { Alert, Button, Like, ListGroup } from "./components";
 
 export default function App() {
   const [showAlert, setShowAlert] = useState(false);
@@ -13,7 +15,11 @@ export default function App() {
     <Container>
       <Stack spacing={4}>
         <ListGroup
-          heading="Cities"
+          heading={
+            <Flex>
+              Cities <FaCity size="20" />
+            </Flex>
+          }
           items={["New York", "San Francisco", "Tokyo", "London", "Paris"]}
           onSelectItem={handleSelectItem}
         />
@@ -21,9 +27,15 @@ export default function App() {
           <Alert onAlertClick={() => setShowAlert(false)}>Hello World</Alert>
         )}
 
-        <Button colorScheme="blue" onClick={() => setShowAlert(true)}>
+        <Button
+          colorScheme="blue"
+          onClick={() => setShowAlert(true)}
+          width="28"
+        >
           Show alert
         </Button>
+
+        <Like onClick={() => console.log("clicked")} />
       </Stack>
     </Container>
   );

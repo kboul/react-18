@@ -1,8 +1,10 @@
-import { Heading, UnorderedList, ListItem } from "@chakra-ui/react";
-import { useState } from "react";
+import { Heading, UnorderedList } from "@chakra-ui/react";
+import { ReactNode, useState } from "react";
+
+import { StyledListItem } from "./styles";
 
 interface ListGroupProps {
-  heading: string;
+  heading: string | ReactNode;
   items: string[];
   onSelectItem: (item: string) => void;
 }
@@ -27,17 +29,13 @@ export default function ListGroup({
       {message}
       <UnorderedList>
         {items.map((item, index) => (
-          <ListItem
+          <StyledListItem
+            active={+(selectedIndex === index)}
             key={item}
             onClick={handleClick(item, index)}
-            style={{
-              cursor: "pointer",
-              backgroundColor:
-                selectedIndex === index ? "lightblue" : "transparent",
-            }}
           >
             {item}
-          </ListItem>
+          </StyledListItem>
         ))}
       </UnorderedList>
     </>
