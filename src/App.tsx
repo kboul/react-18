@@ -2,7 +2,7 @@ import { Container, Flex, Stack } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaCity } from "react-icons/fa";
 
-import { Alert, Button, ListGroup } from "./components";
+import { Alert, Button, Like, ListGroup } from "./components";
 
 export default function App() {
   const [showAlert, setShowAlert] = useState(false);
@@ -27,9 +27,15 @@ export default function App() {
           <Alert onAlertClick={() => setShowAlert(false)}>Hello World</Alert>
         )}
 
-        <Button colorScheme="blue" onClick={() => setShowAlert(true)}>
+        <Button
+          colorScheme="blue"
+          onClick={() => setShowAlert(true)}
+          width="28"
+        >
           Show alert
         </Button>
+
+        <Like onClick={() => console.log("clicked")} />
       </Stack>
     </Container>
   );
