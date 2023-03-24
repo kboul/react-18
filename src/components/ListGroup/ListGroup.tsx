@@ -1,7 +1,7 @@
 import { Heading, UnorderedList, ListItem } from "@chakra-ui/react";
 import { useState } from "react";
 
-import "./ListGroup.css";
+import styles from "./ListGroup.module.css";
 
 interface ListGroupProps {
   heading: string;
@@ -30,10 +30,10 @@ export default function ListGroup({
       <UnorderedList>
         {items.map((item, index) => (
           <ListItem
+            className={[styles.listItem, styles.container].join(" ")}
             key={item}
             onClick={handleClick(item, index)}
             style={{
-              cursor: "pointer",
               backgroundColor:
                 selectedIndex === index ? "lightblue" : "transparent",
             }}
