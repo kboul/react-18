@@ -1,6 +1,8 @@
 import { Heading, UnorderedList, ListItem } from "@chakra-ui/react";
 import { useState } from "react";
 
+import "./ListGroup.css";
+
 interface ListGroupProps {
   heading: string;
   items: string[];
