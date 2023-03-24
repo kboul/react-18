@@ -1,10 +1,10 @@
 import { Heading, UnorderedList } from "@chakra-ui/react";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
 import { StyledListItem } from "./styles";
 
 interface ListGroupProps {
-  heading: string;
+  heading: string | ReactNode;
   items: string[];
   onSelectItem: (item: string) => void;
 }

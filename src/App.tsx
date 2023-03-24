@@ -1,5 +1,7 @@
-import { Container, Stack } from "@chakra-ui/react";
+import { Container, Flex, Stack } from "@chakra-ui/react";
 import { useState } from "react";
+import { FaCity } from "react-icons/fa";
+
 import { Alert, Button, ListGroup } from "./components";
 
 export default function App() {
@@ -13,7 +15,11 @@ export default function App() {
     <Container>
       <Stack spacing={4}>
         <ListGroup
-          heading="Cities"
+          heading={
+            <Flex>
+              Cities <FaCity size="20" />
+            </Flex>
+          }
           items={["New York", "San Francisco", "Tokyo", "London", "Paris"]}
           onSelectItem={handleSelectItem}
         />
