@@ -2,7 +2,7 @@ import { Container, Flex, Stack } from "@chakra-ui/react";
 import { useState } from "react";
 import { FaCity } from "react-icons/fa";
 
-import { Alert, Button, Like, ListGroup, Player } from "./components";
+import { Alert, Button, Like, ListGroup, Player, Pizza } from "./components";
 
 export default function App() {
   const [showAlert, setShowAlert] = useState(false);
@@ -41,6 +41,9 @@ export default function App() {
 
         <hr />
         <Player />
+
+        <hr />
+        <Pizza />
       </Stack>
     </Container>
   );
