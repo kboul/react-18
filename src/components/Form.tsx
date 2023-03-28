@@ -23,8 +23,10 @@ export default function Form() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  console.log(!isValid);
 
   const onSubmit = (data: FieldValues) => console.log(data);
 
@@ -47,7 +49,7 @@ export default function Form() {
           </Alert>
         )}
       </FormControl>
-      <Button mt={4} colorScheme="teal" type="submit">
+      <Button mt={4} colorScheme="teal" type="submit" isDisabled={!isValid}>
         Submit
       </Button>
     </form>
