@@ -1,35 +1,19 @@
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
 
 export default function Form() {
-  const [person, setPerson] = useState({ name: "", age: "" });
+  const { register, handleSubmit } = useForm();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(person);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type } = e.target;
-    setPerson({
-      ...person,
-      [name]: type === "number" ? parseInt(value) : value,
-    });
-  };
+  const onSubmit = (data: FieldValues) => console.log(data);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl>
         <FormLabel>Name</FormLabel>
-        <Input name="name" onChange={handleChange} value={person.name} />
+        <Input {...register("name")} />
 
         <FormLabel mt={4}>Age</FormLabel>
-        <Input
-          name="age"
-          onChange={handleChange}
-          type="number"
-          value={person.age}
-        />
+        <Input {...register("age")} type="number" />
       </FormControl>
       <Button mt={4} colorScheme="teal" type="submit">
         Submit
