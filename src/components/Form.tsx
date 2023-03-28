@@ -1,27 +1,35 @@
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useState } from "react";
 
 export default function Form() {
-  const nameRef = useRef<HTMLInputElement>(null);
-  const ageRef = useRef<HTMLInputElement>(null);
-
-  const person = { name: "", age: 0 };
+  const [person, setPerson] = useState({ name: "", age: "" });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    person.name = nameRef.current?.value || "";
-    person.age = parseInt(ageRef.current?.value || "0");
     console.log(person);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type } = e.target;
+    setPerson({
+      ...person,
+      [name]: type === "number" ? parseInt(value) : value,
+    });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <FormControl>
         <FormLabel>Name</FormLabel>
-        <Input ref={nameRef} />
+        <Input name="name" onChange={handleChange} value={person.name} />
 
         <FormLabel mt={4}>Age</FormLabel>
-        <Input type="number" ref={ageRef} />
+        <Input
+          name="age"
+          onChange={handleChange}
+          type="number"
+          value={person.age}
+        />
       </FormControl>
       <Button mt={4} colorScheme="teal" type="submit">
         Submit
