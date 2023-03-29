@@ -1,32 +1,32 @@
 import { Container, Stack } from "@chakra-ui/react";
 
 import {
-  Like,
-  Player,
-  Pizza,
-  ShoppinCart,
+  // Like,
+  // Player,
+  // Pizza,
+  // ShoppinCart,
   ExpandableText,
-  Cities,
-  Form,
+  // Cities,
+  PersonForm,
 } from "./components";
 
 export default function App() {
   return (
     <Container>
       <Stack spacing={4}>
-        <Cities />
-        <hr />
+        {/* <Cities />
+        <hr /> */}
 
-        <Like onClick={() => console.log("clicked")} />
+        {/* <Like onClick={() => console.log("clicked")} /> */}
 
-        <hr />
-        <Player />
+        {/* <hr />
+        <Player /> */}
 
-        <hr />
+        {/* <hr />
         <Pizza />
 
         <hr />
-        <ShoppinCart />
+        <ShoppinCart /> */}
 
         <hr />
         <ExpandableText maxChars={21}>
@@ -42,7 +42,7 @@ export default function App() {
         </ExpandableText>
 
         <hr />
-        <Form />
+        <PersonForm />
       </Stack>
     </Container>
   );
