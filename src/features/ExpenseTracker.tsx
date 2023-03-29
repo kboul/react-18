@@ -9,9 +9,8 @@ export default function ExpenseTracker() {
   const onSubmit = (data: FieldValues) =>
     setExpenseData((prevState) => [...prevState, data] as ExpenseData[]);
 
-  const handleExpenseDelete = (index: number) => {
+  const handleExpenseDelete = (index: number) =>
     setExpenseData((prevState) => prevState.filter((_, i) => i !== index));
-  };
 
   return (
     <>
