@@ -9,7 +9,9 @@ const ExpenseList = forwardRef<HTMLSelectElement, ExpenseListProps>(
   ({ showAllOption, ...otherProps }, ref) => {
     return (
       <Select placeholder=" " {...otherProps} ref={ref}>
-        {showAllOption && <option value="all">All categories</option>}
+        {showAllOption && (
+          <option value="All categories">All categories</option>
+        )}
         <option value="Groceries">Groceries</option>
         <option value="Utilities">Utilities</option>
         <option value="Entertainment">Entertainment</option>

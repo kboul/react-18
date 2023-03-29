@@ -9,24 +9,41 @@ import {
 } from "@chakra-ui/react";
 import { Button } from ".";
 
+const getfilteredExpenseData = (
+  listValue: string,
+  expenseData: ExpenseData[]
+) =>
+  listValue === "All categories"
+    ? expenseData
+    : expenseData.filter(({ category }) => category === listValue);
+
+const getFilteredExpenseDataWithTotal = (
+  filteredExpenseData: ExpenseData[]
+) => [
+  ...filteredExpenseData,
+  {
+    description: "Total",
+    amount: filteredExpenseData.reduce((acc, { amount }) => acc + amount, 0),
+    category: "",
+  },
+];
+
 interface ExpenseTableProps {
   expenseData: ExpenseData[];
+  listValue: string;
   onExpenseDelete: (index: number) => void;
 }
 
 export default function ExpenseTable({
   expenseData,
+  listValue,
   onExpenseDelete,
 }: ExpenseTableProps) {
   if (expenseData.length > 0) {
-    const expenseDataWithTotal = [
-      ...expenseData,
-      {
-        description: "Total",
-        amount: expenseData.reduce((acc, { amount }) => acc + amount, 0),
-        category: "",
-      },
-    ];
+    const filteredExpenseData = getfilteredExpenseData(listValue, expenseData);
+
+    const filteredExpenseDataWithTotal =
+      getFilteredExpenseDataWithTotal(filteredExpenseData);
 
     return (
       <TableContainer>
@@ -40,7 +57,7 @@ export default function ExpenseTable({
             </Tr>
           </Thead>
           <Tbody>
-            {expenseDataWithTotal.map(
+            {filteredExpenseDataWithTotal.map(
               ({ description, amount, category }, index) => {
                 return (
                   <Tr key={description}>
