@@ -1,6 +1,6 @@
 import { Container, Stack } from "@chakra-ui/react";
 
-import { ExpenseForm } from "./components";
+import { ExpenseTracker } from "./features";
 
 export default function App() {
   return (
@@ -36,8 +36,7 @@ export default function App() {
         {/* <hr />
         <PersonForm /> */}
 
-        <hr />
-        <ExpenseForm />
+        <ExpenseTracker />
       </Stack>
     </Container>
   );

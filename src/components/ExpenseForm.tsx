@@ -5,11 +5,12 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Select,
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import ExpenseList from "./ExpenseList";
 
 const schema = z.object({
   description: z
@@ -21,7 +22,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export default function NewExpenseForm() {
+export default function ExpenseForm() {
   const {
     register,
     handleSubmit,
@@ -50,11 +51,7 @@ export default function NewExpenseForm() {
         )}
 
         <FormLabel mt={4}>Category</FormLabel>
-        <Select placeholder=" " {...register("category")}>
-          <option value="groceries">Groceries</option>
-          <option value="utilities">Utilities</option>
-          <option value="entertainment">Entertainment</option>
-        </Select>
+        <ExpenseList {...register("category")} />
         {errors.category && (
           <Alert status="error">
             <AlertDescription>{errors.category.message}</AlertDescription>
