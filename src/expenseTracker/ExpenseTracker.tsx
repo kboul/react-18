@@ -1,7 +1,9 @@
 import { ChangeEvent, useState } from "react";
 import { FieldValues } from "react-hook-form";
 
-import { ExpenseForm, ExpenseList, ExpenseTable } from "../components";
+import ExpenseForm from "./ExpenseForm";
+import ExpenseList from "./ExpenseList";
+import ExpenseTable from "./ExpenseTable";
 
 export default function ExpenseTracker() {
   const [expenseData, setExpenseData] = useState<ExpenseData[]>([]);

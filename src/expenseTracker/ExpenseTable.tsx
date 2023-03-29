@@ -7,7 +7,7 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
-import { Button } from ".";
+import { Button } from "../components";
 
 const getfilteredExpenseData = (
   listValue: string,

@@ -1,6 +1,6 @@
 import { Container, Stack } from "@chakra-ui/react";
 
-import { ExpenseTracker } from "./features";
+import { ExpenseTracker } from "./expenseTracker";
 
 export default function App() {
   return (
