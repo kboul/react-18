@@ -11,9 +11,13 @@ import { Button } from ".";
 
 interface ExpenseTableProps {
   expenseData: ExpenseData[];
+  onExpenseDelete: (index: number) => void;
 }
 
-export default function ExpenseTable({ expenseData }: ExpenseTableProps) {
+export default function ExpenseTable({
+  expenseData,
+  onExpenseDelete,
+}: ExpenseTableProps) {
   if (expenseData.length > 0)
     return (
       <TableContainer>
@@ -27,14 +31,19 @@ export default function ExpenseTable({ expenseData }: ExpenseTableProps) {
             </Tr>
           </Thead>
           <Tbody>
-            {expenseData.map(({ description, amount, category }) => {
+            {expenseData.map(({ description, amount, category }, index) => {
               return (
                 <Tr key={description}>
                   <Td>{description}</Td>
                   <Td>{amount}</Td>
                   <Td>{category}</Td>
                   <Td>
-                    <Button colorScheme="red">Delete</Button>
+                    <Button
+                      colorScheme="red"
+                      onClick={() => onExpenseDelete(index)}
+                    >
+                      Delete
+                    </Button>
                   </Td>
                 </Tr>
               );

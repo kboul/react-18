@@ -9,6 +9,10 @@ export default function ExpenseTracker() {
   const onSubmit = (data: FieldValues) =>
     setExpenseData((prevState) => [...prevState, data] as ExpenseData[]);
 
+  const handleExpenseDelete = (index: number) => {
+    setExpenseData((prevState) => prevState.filter((_, i) => i !== index));
+  };
+
   return (
     <>
       <ExpenseForm onSubmit={onSubmit} />
@@ -17,7 +21,10 @@ export default function ExpenseTracker() {
 
       <ExpenseList defaultValue="all" showAllOption />
 
-      <ExpenseTable expenseData={expenseData} />
+      <ExpenseTable
+        expenseData={expenseData}
+        onExpenseDelete={handleExpenseDelete}
+      />
     </>
   );
 }
