@@ -26,8 +26,6 @@ export default function Form() {
     formState: { errors, isValid },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  console.log(!isValid);
-
   const onSubmit = (data: FieldValues) => console.log(data);
 
   return (

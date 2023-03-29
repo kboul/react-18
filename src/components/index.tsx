@@ -5,6 +5,7 @@ export { default as ExpandableText } from "./ExpandableText";
 export { default as PersonForm } from "./PersonForm";
 export { default as Like } from "./Like";
 export { default as ListGroup } from "./ListGroup/ListGroup";
+export { default as ExpenseForm } from "./ExpenseForm";
 export { default as Pizza } from "./Pizza";
 export { default as Player } from "./Player";
 export { default as ShoppinCart } from "./ShoppingCart";
