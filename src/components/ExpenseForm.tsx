@@ -22,17 +22,25 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export default function ExpenseForm() {
+export default function ExpenseForm({
+  onSubmit,
+}: {
+  onSubmit: (data: FieldValues) => void;
+}) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSubmit = (data: FieldValues) => console.log(data);
+  const handleFormSubmit = handleSubmit((data) => {
+    onSubmit(data);
+    reset();
+  });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleFormSubmit}>
       <FormControl>
         <FormLabel>Description</FormLabel>
         <Input {...register("description")} />
