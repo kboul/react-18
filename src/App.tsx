@@ -1,14 +1,6 @@
 import { Container, Stack } from "@chakra-ui/react";
 
-import {
-  // Like,
-  // Player,
-  // Pizza,
-  // ShoppinCart,
-  ExpandableText,
-  // Cities,
-  PersonForm,
-} from "./components";
+import { ExpenseTracker } from "./expenseTracker";
 
 export default function App() {
   return (
@@ -28,7 +20,7 @@ export default function App() {
         <hr />
         <ShoppinCart /> */}
 
-        <hr />
+        {/* <hr />
         <ExpandableText maxChars={21}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -39,10 +31,12 @@ export default function App() {
           the release of Letraset sheets containing Lorem Ipsum passages, and
           more recently with desktop publishing software like Aldus PageMaker
           including versions of Lorem Ipsum.
-        </ExpandableText>
+        </ExpandableText> */}
 
-        <hr />
-        <PersonForm />
+        {/* <hr />
+        <PersonForm /> */}
+
+        <ExpenseTracker />
       </Stack>
     </Container>
   );

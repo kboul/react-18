@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { useState } from "react";
-import { Button } from ".";
+import { Button } from "../components";
 
 interface ExpandableTextProps {
   children: string;
