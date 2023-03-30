@@ -68,6 +68,7 @@ export default function ExpenseTable({
                       <Td>
                         <Button
                           colorScheme="red"
+                          variant="outline"
                           onClick={() => onExpenseDelete(index)}
                         >
                           Delete

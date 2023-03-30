@@ -67,7 +67,7 @@ export default function ExpenseForm({
         )}
       </FormControl>
 
-      <Button mt={4} type="submit">
+      <Button colorScheme="blue" mt={4} type="submit">
         Submit
       </Button>
     </form>
