@@ -26,7 +26,9 @@ export default function Cities() {
 
   {
     showAlert && (
-      <Alert onAlertClick={() => setShowAlert(false)}>Hello World</Alert>
+      <Alert status="info" onAlertClick={() => setShowAlert(false)}>
+        Hello World
+      </Alert>
     );
 
     <Button colorScheme="blue" onClick={() => setShowAlert(true)} width="28">

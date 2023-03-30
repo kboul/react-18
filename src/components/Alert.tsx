@@ -1,14 +1,24 @@
-import { Alert, AlertIcon, Box, CloseButton } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertIcon,
+  AlertProps,
+  Box,
+  CloseButton,
+} from "@chakra-ui/react";
 import { ReactNode } from "react";
 
-interface AppAlertProps {
+interface AppAlertProps extends AlertProps {
   children: ReactNode;
   onAlertClick?: () => void;
 }
 
-export default function AppAlert({ children, onAlertClick }: AppAlertProps) {
+export default function AppAlert({
+  children,
+  onAlertClick,
+  ...otherProps
+}: AppAlertProps) {
   return (
-    <Alert status="info">
+    <Alert {...otherProps}>
       <AlertIcon />
       {children}
       <Box flex={1} />
