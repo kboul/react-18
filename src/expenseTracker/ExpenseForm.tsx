@@ -11,16 +11,25 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import ExpenseList from "./ExpenseList";
+import { categories } from "./constants";
 
 const schema = z.object({
   description: z
     .string()
-    .min(3, { message: "Description should be at least 3 characters" }),
-  amount: z.number({ invalid_type_error: "Amount is required" }),
-  category: z.string().nonempty({ message: "Category is required" }),
+    .min(3, { message: "Description should be at least 3 characters" })
+    .max(50),
+  amount: z
+    .number({ invalid_type_error: "Amount is required" })
+    .min(0.01)
+    .max(100_000),
+  category: z.enum(categories, {
+    errorMap: () => ({
+      message: "Category is required",
+    }),
+  }),
 });
 
-type FormData = z.infer<typeof schema>;
+type ExpenseFormData = z.infer<typeof schema>;
 
 export default function ExpenseForm({
   onSubmit,
@@ -32,7 +41,7 @@ export default function ExpenseForm({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<ExpenseFormData>({ resolver: zodResolver(schema) });
 
   const handleFormSubmit = handleSubmit((data) => {
     onSubmit(data);

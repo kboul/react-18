@@ -1,5 +1,6 @@
 import { Select, SelectProps } from "@chakra-ui/react";
 import { forwardRef } from "react";
+import { categories } from "./constants";
 
 interface ExpenseListProps extends SelectProps {
   showAllOption?: boolean;
@@ -12,9 +13,11 @@ const ExpenseList = forwardRef<HTMLSelectElement, ExpenseListProps>(
         {showAllOption && (
           <option value="All categories">All categories</option>
         )}
-        <option value="Groceries">Groceries</option>
-        <option value="Utilities">Utilities</option>
-        <option value="Entertainment">Entertainment</option>
+        {categories.map((category) => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
       </Select>
     );
   }
