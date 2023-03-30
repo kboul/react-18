@@ -1,5 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
+
 import { Alert } from ".";
 
 interface User {
@@ -16,13 +17,17 @@ export default function Users() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios
-      .get<User[]>("https://jsonplaceholder.typicode.com/xusers")
-      .then((res) => {
-        console.log(res);
+    const getUsers = async () => {
+      try {
+        const res = await axios.get<User[]>(
+          "https://jsonplaceholder.typicode.com/users"
+        );
         setUsers(res.data);
-      })
-      .catch((err) => setError(err.message));
+      } catch (err) {
+        setError((err as AxiosError).message);
+      }
+    };
+    getUsers();
   }, []);
 
   return (
