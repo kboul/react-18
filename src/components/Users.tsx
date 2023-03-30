@@ -1,5 +1,6 @@
 import axios, { AxiosError, CanceledError } from "axios";
 import { useEffect, useState } from "react";
+import { Spinner } from "@chakra-ui/react";
 
 import { Alert } from ".";
 
@@ -13,24 +14,27 @@ interface User {
 }
 
 export default function Users() {
+  const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
 
+    setIsLoading(true);
+
     const getUsers = async () => {
       try {
         const res = await axios.get<User[]>(
           "https://jsonplaceholder.typicode.com/users",
-          {
-            signal: controller.signal,
-          }
+          { signal: controller.signal }
         );
         setUsers(res.data);
+        setIsLoading(false);
       } catch (err) {
         if (err instanceof CanceledError) return;
         setError((err as AxiosError).message);
+        setIsLoading(false);
       }
     };
     getUsers();
@@ -38,10 +42,12 @@ export default function Users() {
     return () => controller.abort();
   }, []);
 
+  if (error) return <Alert status="error">{error}</Alert>;
+
   return (
     <>
-      {error ? (
-        <Alert status="error">{error}</Alert>
+      {isLoading ? (
+        <Spinner />
       ) : (
         <ul>
           {users.map((user) => (
