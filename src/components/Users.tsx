@@ -1,6 +1,5 @@
-import axios, { AxiosError, CanceledError } from "axios";
 import { useEffect, useState } from "react";
-import { Spinner } from "@chakra-ui/react";
+import axios, { AxiosError, CanceledError } from "axios";
 
 import { Alert } from ".";
 
@@ -43,18 +42,12 @@ export default function Users() {
   }, []);
 
   if (error) return <Alert status="error">{error}</Alert>;
-
+  if (isLoading) return "Loading...";
   return (
-    <>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <ul>
-          {users.map((user) => (
-            <li key={user.id}>{user.name}</li>
-          ))}
-        </ul>
-      )}
-    </>
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
   );
 }
