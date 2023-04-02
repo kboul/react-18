@@ -19,7 +19,7 @@ export default function Users() {
 
   useEffect(() => {
     setIsLoading(true);
-    const { request, cancel } = userApi.getUsers();
+    const { request, cancel } = userApi.getAll<User>();
     request
       .then((res) => {
         setUsers(res.data);
@@ -39,7 +39,7 @@ export default function Users() {
     setUsers(newUsers.filter((u) => u.id !== user.id));
     if (error) setError("");
 
-    userApi.deleteUser(user.id).catch((err) => {
+    userApi.delete(user.id).catch((err) => {
       setError(err.message);
       setUsers(newUsers);
     });
@@ -59,7 +59,7 @@ export default function Users() {
     setUsers((prevState) => [newUser, ...prevState]);
 
     userApi
-      .createUser(newUser)
+      .create<User>(newUser)
       .then((res) =>
         setUsers((prevState) =>
           prevState.map((u) => (u.id === 0 ? res.data : u))
@@ -80,7 +80,7 @@ export default function Users() {
       )
     );
 
-    userApi.updateUser(user.id, { name: `${user.name}!!!` }).catch((err) => {
+    userApi.update(user.id, { name: `${user.name}!!!` }).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
     });
