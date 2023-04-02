@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 
 import { Alert, Button } from ".";
-import apiClient, { AxiosError, CanceledError } from "../api/apiClient";
+import { AxiosError, CanceledError } from "../api/apiClient";
 import userApi from "../api/userApi";
 
 export default function Users() {
@@ -39,7 +39,7 @@ export default function Users() {
     setUsers(newUsers.filter((u) => u.id !== user.id));
     if (error) setError("");
 
-    apiClient.delete(`/users/${user.id}`).catch((err) => {
+    userApi.deleteUser(user.id).catch((err) => {
       setError(err.message);
       setUsers(newUsers);
     });
@@ -58,8 +58,8 @@ export default function Users() {
     };
     setUsers((prevState) => [newUser, ...prevState]);
 
-    apiClient
-      .post("/users", newUser)
+    userApi
+      .createUser(newUser)
       .then((res) =>
         setUsers((prevState) =>
           prevState.map((u) => (u.id === 0 ? res.data : u))
@@ -80,14 +80,10 @@ export default function Users() {
       )
     );
 
-    apiClient
-      .patch(`/users/${user.id}`, {
-        name: `${user.name}!!!`,
-      })
-      .catch((err) => {
-        setError(err.message);
-        setUsers(originalUsers);
-      });
+    userApi.updateUser(user.id, { name: `${user.name}!!!` }).catch((err) => {
+      setError(err.message);
+      setUsers(originalUsers);
+    });
   };
 
   if (isLoading) return <Spinner />;

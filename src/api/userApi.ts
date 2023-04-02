@@ -8,4 +8,11 @@ const getUsers = () => {
   return { request, cancel: () => controller.abort() };
 };
 
-export default { getUsers };
+const createUser = (user: User) => apiClient.post("/users", user);
+
+const updateUser = (id: number, updatedUserField: any) =>
+  apiClient.put(`/users/${id}`, updatedUserField);
+
+const deleteUser = (id: number) => apiClient.delete(`/users/${id}`);
+
+export default { getUsers, createUser, updateUser, deleteUser };
