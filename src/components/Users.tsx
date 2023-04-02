@@ -9,30 +9,11 @@ import {
 } from "@chakra-ui/react";
 
 import { Alert, Button } from ".";
-import { AxiosError, CanceledError } from "../api/apiClient";
 import userApi from "../api/userApi";
+import useUsers from "../hooks/useUsers";
 
 export default function Users() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [users, setUsers] = useState<User[]>([]);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    setIsLoading(true);
-    const { request, cancel } = userApi.getAll<User>();
-    request
-      .then((res) => {
-        setUsers(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        if (err instanceof CanceledError) return;
-        setError((err as AxiosError).message);
-        setIsLoading(false);
-      });
-
-    return () => cancel();
-  }, []);
+  const { isLoading, users, error, setUsers, setError } = useUsers();
 
   const handleUserDelete = (user: User) => async () => {
     const newUsers = [...users];
