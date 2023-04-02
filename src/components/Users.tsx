@@ -20,6 +20,8 @@ interface User {
   website: string;
 }
 
+const usersEndpoint = "https://jsonplaceholder.typicode.com/users";
+
 export default function Users() {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
@@ -32,10 +34,9 @@ export default function Users() {
 
     const getUsers = async () => {
       try {
-        const res = await axios.get<User[]>(
-          "https://jsonplaceholder.typicode.com/users",
-          { signal: controller.signal }
-        );
+        const res = await axios.get<User[]>(usersEndpoint, {
+          signal: controller.signal,
+        });
         setUsers(res.data);
         setIsLoading(false);
       } catch (err) {
@@ -54,16 +55,15 @@ export default function Users() {
     setUsers(newUsers.filter((u) => u.id !== user.id));
     if (error) setError("");
 
-    axios
-      .delete(`https://jsonplaceholder.typicode.com/users/${user.id}`)
-      .catch((err) => {
-        setError(err.message);
-        setUsers(newUsers);
-      });
+    axios.delete(`${usersEndpoint}/${user.id}`).catch((err) => {
+      setError(err.message);
+      setUsers(newUsers);
+    });
   };
 
   const handleUserAdd = async () => {
     const originalUsers = [...users];
+
     const newUser = {
       id: 0,
       name: "Mosh",
@@ -75,12 +75,31 @@ export default function Users() {
     setUsers((prevState) => [newUser, ...prevState]);
 
     axios
-      .post("https://jsonplaceholder.typicode.com/users", newUser)
+      .post(usersEndpoint, newUser)
       .then((res) =>
         setUsers((prevState) =>
           prevState.map((u) => (u.id === 0 ? res.data : u))
         )
       )
+      .catch((err) => {
+        setError(err.message);
+        setUsers(originalUsers);
+      });
+  };
+
+  const handleUserUpdate = (user: User) => async () => {
+    const originalUsers = [...users];
+
+    setUsers((prevState) =>
+      prevState.map((u) =>
+        u.id === user.id ? { ...user, name: `${user.name}!!!` } : u
+      )
+    );
+
+    axios
+      .patch(`${usersEndpoint}/${user.id}`, {
+        name: `${user.name}!!!`,
+      })
       .catch((err) => {
         setError(err.message);
         setUsers(originalUsers);
@@ -100,6 +119,15 @@ export default function Users() {
             {users.map((user) => (
               <Tr key={user.id}>
                 <Td>{user.name}</Td>
+                <Td>
+                  <Button
+                    variant="outline"
+                    colorScheme="gray"
+                    onClick={handleUserUpdate(user)}
+                  >
+                    Update
+                  </Button>
+                </Td>
                 <Td>
                   <Button
                     variant="outline"
