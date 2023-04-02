@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosError, CanceledError } from "axios";
+import {
+  Spinner,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Tr,
+} from "@chakra-ui/react";
 
-import { Alert } from ".";
+import { Alert, Button } from ".";
 
 interface User {
   email: string;
@@ -41,13 +49,43 @@ export default function Users() {
     return () => controller.abort();
   }, []);
 
-  if (error) return <Alert status="error">{error}</Alert>;
-  if (isLoading) return "Loading...";
+  const handleUserDelete = (user: User) => async () => {
+    const newUsers = [...users];
+    setUsers(newUsers.filter((u) => u.id !== user.id));
+    if (error) setError("");
+
+    axios
+      .delete(`https://jsonplaceholder.typicode.com/users/${user.id}`)
+      .catch((err) => {
+        setError(err.message);
+        setUsers(newUsers);
+      });
+  };
+
+  if (isLoading) return <Spinner />;
   return (
-    <ul>
-      {users.map((user) => (
-        <li key={user.id}>{user.name}</li>
-      ))}
-    </ul>
+    <>
+      {error && <Alert status="error">{error}</Alert>}
+      <TableContainer>
+        <Table>
+          <Tbody>
+            {users.map((user) => (
+              <Tr key={user.id}>
+                <Td>{user.name}</Td>
+                <Td>
+                  <Button
+                    variant="outline"
+                    colorScheme="red"
+                    onClick={handleUserDelete(user)}
+                  >
+                    Delete
+                  </Button>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
