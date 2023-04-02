@@ -10,15 +10,7 @@ import {
 
 import { Alert, Button } from ".";
 import apiClient, { AxiosError, CanceledError } from "../api/apiClient";
-
-interface User {
-  email: string;
-  id: number;
-  name: string;
-  phone: string;
-  username: string;
-  website: string;
-}
+import userApi from "../api/userApi";
 
 export default function Users() {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,26 +18,20 @@ export default function Users() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const controller = new AbortController();
-
     setIsLoading(true);
-
-    const getUsers = async () => {
-      try {
-        const res = await apiClient.get<User[]>("/users", {
-          signal: controller.signal,
-        });
+    const { request, cancel } = userApi.getUsers();
+    request
+      .then((res) => {
         setUsers(res.data);
         setIsLoading(false);
-      } catch (err) {
+      })
+      .catch((err) => {
         if (err instanceof CanceledError) return;
         setError((err as AxiosError).message);
         setIsLoading(false);
-      }
-    };
-    getUsers();
+      });
 
-    return () => controller.abort();
+    return () => cancel();
   }, []);
 
   const handleUserDelete = (user: User) => async () => {
