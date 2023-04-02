@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios, { AxiosError, CanceledError } from "axios";
 import {
   Spinner,
   Table,
@@ -10,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 
 import { Alert, Button } from ".";
+import apiClient, { AxiosError, CanceledError } from "../api/apiClient";
 
 interface User {
   email: string;
@@ -19,8 +19,6 @@ interface User {
   username: string;
   website: string;
 }
-
-const usersEndpoint = "https://jsonplaceholder.typicode.com/users";
 
 export default function Users() {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +32,7 @@ export default function Users() {
 
     const getUsers = async () => {
       try {
-        const res = await axios.get<User[]>(usersEndpoint, {
+        const res = await apiClient.get<User[]>("/users", {
           signal: controller.signal,
         });
         setUsers(res.data);
@@ -55,7 +53,7 @@ export default function Users() {
     setUsers(newUsers.filter((u) => u.id !== user.id));
     if (error) setError("");
 
-    axios.delete(`${usersEndpoint}/${user.id}`).catch((err) => {
+    apiClient.delete(`/users/${user.id}`).catch((err) => {
       setError(err.message);
       setUsers(newUsers);
     });
@@ -74,8 +72,8 @@ export default function Users() {
     };
     setUsers((prevState) => [newUser, ...prevState]);
 
-    axios
-      .post(usersEndpoint, newUser)
+    apiClient
+      .post("/users", newUser)
       .then((res) =>
         setUsers((prevState) =>
           prevState.map((u) => (u.id === 0 ? res.data : u))
@@ -96,8 +94,8 @@ export default function Users() {
       )
     );
 
-    axios
-      .patch(`${usersEndpoint}/${user.id}`, {
+    apiClient
+      .patch(`/users/${user.id}`, {
         name: `${user.name}!!!`,
       })
       .catch((err) => {
