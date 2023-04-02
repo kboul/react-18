@@ -62,10 +62,38 @@ export default function Users() {
       });
   };
 
+  const handleUserAdd = async () => {
+    const originalUsers = [...users];
+    const newUser = {
+      id: 0,
+      name: "Mosh",
+      email: "mosh@gmail.com",
+      username: "Mosh",
+      phone: "123456789",
+      website: "mosh.com",
+    };
+    setUsers((prevState) => [newUser, ...prevState]);
+
+    axios
+      .post("https://jsonplaceholder.typicode.com/users", newUser)
+      .then((res) =>
+        setUsers((prevState) =>
+          prevState.map((u) => (u.id === 0 ? res.data : u))
+        )
+      )
+      .catch((err) => {
+        setError(err.message);
+        setUsers(originalUsers);
+      });
+  };
+
   if (isLoading) return <Spinner />;
   return (
     <>
       {error && <Alert status="error">{error}</Alert>}
+      <Button variant="outline" onClick={handleUserAdd} width={20}>
+        Add user
+      </Button>
       <TableContainer>
         <Table>
           <Tbody>
